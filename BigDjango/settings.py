@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'simpleui',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,7 +46,11 @@ INSTALLED_APPS = [
     'django_tables2',  # 自定义表格显示字段
 
     # apps
-    'rbac'
+    'apps.rbac',
+    'apps.users',
+
+    'import_export'
+
 ]
 
 MIDDLEWARE = [
@@ -63,14 +68,24 @@ ROOT_URLCONF = 'BigDjango.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                # 在模板里面可以直接使用settings的DEBUG参数以及强大的sql_queries:它本身是一个字典，其中包括当前页面执行SQL查询所需的时间
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',  # 在模板中可以直接使用request对象
+                'django.contrib.auth.context_processors.auth',  # 在模板里面可以直接使用user，perms对象。
+                'django.contrib.messages.context_processors.messages',  # 在模板里面可以直接使用message对象。
+
+                # 另外Django还提供了几个全局上下文处理器：
+                # django.template.context_processors.i18n：在模板里面可以直接使用settings的LANGUAGES和LANGUAGE_CODE
+                # django.template.context_processors.media：可以在模板里面使用settings的MEDIA_URL参数
+                # django.template.context_processors.csrf : 给模板标签 csrf_token提供值
+                # django.template.context_processors.tz: 可以在模板里面使用 TIME_ZONE参数。
+
+                # 自定义全局上下文处理器
+                'BigDjango..global_site_name',  # 全局设置网站名
             ],
         },
     },
@@ -115,7 +130,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
+SIMPLEUI_LOGO = 'https://th.bing.com/th/id/R2411a2b340731d67dfa0d84503e915e3?rik=zmYce%2fLys72JVQ&pid=ImgRaw'
 
 TIME_ZONE = 'UTC'
 
@@ -137,3 +154,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 AUTH_USER_MODEL = 'rbac.UserProfile'
+
+SITE_NAME = 'Sophomore'
