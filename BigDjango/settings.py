@@ -85,7 +85,7 @@ TEMPLATES = [
                 # django.template.context_processors.tz: 可以在模板里面使用 TIME_ZONE参数。
 
                 # 自定义全局上下文处理器
-                'BigDjango..global_site_name',  # 全局设置网站名
+                # 'BigDjango..global_site_name',  # 全局设置网站名
             ],
         },
     },
