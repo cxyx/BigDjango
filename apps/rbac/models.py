@@ -97,7 +97,7 @@ class UserProfile(AbstractUser):
     name = models.CharField(max_length=20, default="", verbose_name="姓名")
     mobile = models.CharField(max_length=11, default="", verbose_name="手机号码")
     email = models.EmailField(max_length=50, verbose_name="邮箱")
-    avatar = models.FileField(upload_to=user_directory_path, null=True)
+    # avatar = models.FileField(upload_to=user_directory_path, null=True)
     image = models.ImageField(upload_to="static/%Y/%m", default="image/default.png",
                               max_length=100, null=True, blank=True)
     department = models.ForeignKey("Organization", null=True, blank=True, on_delete=models.SET_NULL, verbose_name="部门")

@@ -45,13 +45,17 @@ INSTALLED_APPS = [
     'django_filters',  # 自定义过滤字段
     'django_tables2',  # 自定义表格显示字段
 
-    # apps
+    'rest_framework',
+
     'apps.rbac',
     'apps.users',
     'apps.app01',
+    'apps.blog',
 
     'import_export',
     'django_elasticsearch_dsl',
+
+    #
 
 ]
 
