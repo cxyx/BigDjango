@@ -48,8 +48,10 @@ INSTALLED_APPS = [
     # apps
     'apps.rbac',
     'apps.users',
+    'apps.app01',
 
-    'import_export'
+    'import_export',
+    'django_elasticsearch_dsl',
 
 ]
 
@@ -101,6 +103,7 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
+    # 推荐该种方式,方便配置,更加安全
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'OPTIONS': {
@@ -134,18 +137,31 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'zh-hans'
 SIMPLEUI_LOGO = 'https://th.bing.com/th/id/R2411a2b340731d67dfa0d84503e915e3?rik=zmYce%2fLys72JVQ&pid=ImgRaw'
 
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
+USE_TZ = True  # 默认值True。
+TIME_ZONE = 'Asia/Shanghai'  # 设置时区
+USE_I18N = True  # 默认为True，是否启用自动翻译系统
+USE_L10N = True  # 默认False，以本地化格式显示数字和时间
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+# 单个静态文件夹
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# 多个静态文件夹注册
+STATICFILES_DIRS = [
+    # 第一个静态文件夹
+    os.path.join(BASE_DIR, 'static'),
+    # 第二个静态文件夹
+    # "/home/user/pictures",
+
+]
+'''
+media文件价一般用于放置用户上传的文件。对于此文件夹的权限设置异常重要，因为用户可能会上传可执行的文件，
+影响网站和服务器的安全。对于此文件夹权限，建议使用sudo chmod 755 media命令设置成755，而不要使用777（可读、可写、可执行)。
+'''
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -156,3 +172,21 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 AUTH_USER_MODEL = 'rbac.UserProfile'
 
 SITE_NAME = 'Sophomore'
+
+
+'''
+    邮箱配置
+    https://pythondjango.cn/django/basics/17-settings/#%E9%82%AE%E7%AE%B1%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE
+'''
+
+
+'''
+    缓存配置
+    https://pythondjango.cn/django/basics/17-settings/#%E7%BC%93%E5%AD%98%E8%AE%BE%E7%BD%AE
+'''
+
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': 'localhost:9200'
+    },
+}
