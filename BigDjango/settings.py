@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -35,6 +36,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django_celery_beat',  # django celery定时相关组件
+    'django_celery_results',  # django celery执行结果存储组件
+
+    'widget_tweaks',  # 用户美化表单
+    'django_filters',  # 自定义过滤字段
+    'django_tables2',  # 自定义表格显示字段
+
+    # apps
+    'rbac'
 ]
 
 MIDDLEWARE = [
@@ -123,3 +134,6 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+AUTH_USER_MODEL = 'rbac.UserProfile'
